@@ -47,3 +47,62 @@
   #shareDialog .actions { margin: 12px 0; }
 }
 
+.mobile-match-nav, #mobileAction { display: none; }
+@media screen and (max-width:600px), screen and (max-width:900px) and (max-height:500px) {
+  .match-panel.match-focus { padding: max(6px,env(safe-area-inset-top)) max(8px,env(safe-area-inset-right)) max(6px,env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left)); overflow: hidden; }
+  .match-focus .match-toolbar { position: static; padding: 0 0 6px; flex-wrap: nowrap; gap: 8px; }
+  .match-focus .match-toolbar h2 { display: none; }
+  .match-focus .match-toolbar button { min-height: 44px; }
+  .match-focus .match-toolbar #focusMatch { margin-left: auto; font-size: 11px; }
+  .match-focus .live-score { margin: 0; padding: 4px 0; flex-wrap: nowrap; gap: 6px; }
+  .match-focus .live-score label { min-width: 66px; font-size: 10px; }
+  .match-focus .live-score select { width: 66px; min-height: 44px; margin-top: 2px; font-size: 12px; padding: 4px; }
+  .match-focus .live-score>strong { min-width: 64px; font-size: 24px; }
+  .match-focus .point-buttons { gap: 4px; }
+  .match-focus .point-buttons button { min-height: 40px; padding: 4px; font-size: 10px; }
+  .match-focus .score-help, .match-focus>.button-guide { display: none; }
+  .match-focus #actionStatus { margin: 3px 0; height: 24px; min-height: 24px; font-size: 10px; line-height: 12px; overflow: hidden; }
+  .match-focus .mobile-match-nav { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin: 4px 0 8px; flex-shrink: 0; }
+  .mobile-match-nav button { min-height: 44px; padding: 6px; font-size: 12px; border: 2px solid #8fa6c3; }
+  .mobile-match-nav button[aria-pressed="true"] { background: #123c84; border-color: #123c84; color: white; }
+  .mobile-match-nav #mobile-changes { background: #f29843; color: #3c2106; border-color: #9c4300; }
+  .mobile-match-nav #mobile-changes[aria-pressed="true"] { background: #a64b0d; color: white; }
+  .match-focus .match-board { display: block; min-height: 0; overflow-y: auto; overflow-x: hidden; padding: 3px; }
+  .match-focus .step-title, .match-focus .court-heading, .match-focus .court-summary { display: none; }
+  .match-focus[data-mobile-step="stats"] .players-zone,
+  .match-focus[data-mobile-step="players"] .statistics-zone,
+  .match-focus[data-mobile-step="changes"] .statistics-zone { display: none; }
+  .match-focus .action-picker { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 8px; }
+  .match-focus .action-picker button { min-height: 64px; padding: 7px; font-size: 12px; }
+  .match-focus .action-type { font-size: 10px; }
+  .match-focus .error-picker { min-height: 0; margin: 8px 0 0; }
+  .match-focus .error-picker:empty { display: none; }
+  .match-focus .error-picker button { min-height: 48px; font-size: 15px; }
+  .match-focus .selection-hint { min-height: 0; margin: 8px 0 0; padding: 8px; font-size: 12px; }
+  .match-focus[data-mobile-step="players"] #mobileAction { display: block; margin: 0 0 8px; padding: 9px; background: #ecdfa4; border-radius: 8px; color: #172c4b; font-weight: 700; font-size: 13px; }
+  .match-focus[data-mobile-step="players"] #courtManager,
+  .match-focus[data-mobile-step="players"] #liberoQuick { display: none; }
+  .match-focus .quick-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; }
+  .match-focus .assign-player { min-height: 66px; padding: 7px; gap: 4px; }
+  .match-focus .assign-player .player-dorsal { font-size: 24px; }
+  .match-focus .assign-player .player-name { font-size: 13px; }
+  .match-focus .assign-player .player-count { display: none; }
+  .match-focus[data-mobile-step="changes"] #quickPlayers,
+  .match-focus[data-mobile-step="changes"] #mobileAction { display: none; }
+  .match-focus[data-mobile-step="changes"] #courtManager[open] { max-height: none; overflow: visible; margin: 0; }
+}
+@media screen and (max-width:900px) and (max-height:500px) {
+  .match-focus .action-picker { grid-template-columns: repeat(5,minmax(0,1fr)); }
+  .match-focus .action-picker button { min-height: 54px; }
+  .match-focus .quick-grid { grid-template-columns: repeat(4,minmax(0,1fr)); }
+  .match-focus .assign-player { min-height: 58px; }
+  .match-focus #actionStatus { display: none; }
+  .match-focus .point-buttons { display: flex; }
+}
+@media screen and (max-width:600px) and (max-height:650px) {
+  .match-focus #actionStatus { display: none; }
+  .match-focus .assign-player { min-height: 60px; }
+  .match-focus .assign-player .player-dorsal { font-size: 20px; }
+  .match-focus .assign-player .player-name { font-size: 12px; -webkit-line-clamp: 1; }
+}
+

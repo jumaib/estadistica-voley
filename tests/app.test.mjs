@@ -8,6 +8,14 @@ function browserSession(store=new Map(),fetch=async()=>{throw Error('offline')})
  const els={};const c=vm.createContext({document:{activeElement:null,addEventListener(){},getElementById:id=>els[id]??(els[id]={value:'',textContent:'',innerHTML:'',dataset:{},hidden:true,setAttribute(){},setCustomValidity(){},checkValidity(){return true},reportValidity(){},addEventListener(){},querySelector(){return null}})},localStorage:{getItem:k=>store.get(k)||null,setItem:(k,v)=>store.set(k,v)},crypto:webcrypto,console,Date,window:{addEventListener(){}},setTimeout(){return 1},clearTimeout(){},setInterval(){},AbortSignal,fetch});
  vm.runInContext(schema+'\n'+live+'\n'+app,c);return c;
 }
+test('mobile steps follow action, error reason and assignment without changing match data on navigation',()=>{
+ const c=browserSession();vm.runInContext(readFileSync('public/mobile.js','utf8'),c);vm.runInContext(`
+ $('add').onclick();const before=statSnapshot();setMobileStep('players');setMobileStep('stats');if(statSnapshot()!==before)throw Error('navigation changed data');
+ selectedAction='se';selectedReason=null;syncMobileStep();if($('matchPanel').dataset.mobileStep!=='stats')throw Error('reason step');
+ selectedReason='Net';syncMobileStep();if($('matchPanel').dataset.mobileStep!=='players')throw Error('player step');
+ recordAction(0,'seNet');syncMobileStep();if($('matchPanel').dataset.mobileStep!=='stats'||current.players[0].seNet!==1)throw Error('return to actions');
+ `,c);
+});
 test('six players plus two marked liberos can receive stats without relays and persist across reloads',()=>{
  const store=new Map(),c=browserSession(store);vm.runInContext(`
  for(let i=0;i<9;i++){$('add').onclick();current.players[i].name='Jugadora '+i}save();const ids=current.players.map(p=>p.pid);changePlayerRole(ids[6],'libero');changePlayerRole(ids[7],'libero');courtDraft=ids.slice(0,8);saveLineup();
