@@ -56,3 +56,26 @@
   .match-focus[data-tablet-layout="true"] .quick-grid { grid-template-columns: repeat(4,minmax(0,1fr)); }
   .match-focus[data-tablet-layout="true"] .assign-player { min-height: clamp(110px,20dvh,165px); }
 }
+/* Let the statistic occupy the complete button, without a category caption. */
+.match-panel .action-picker button { justify-content: center; align-items: center; text-align: center; gap: 0; }
+.match-panel .action-picker button strong { font-size: inherit; line-height: 1.12; width: 100%; }
+.match-panel .action-picker button { font-size: 22px; padding: 10px; }
+@media (max-width:600px), (max-width:900px) and (max-height:500px) {
+ .match-focus .action-picker button { font-size: clamp(16px,4.4vw,23px); padding: 5px; }
+ .match-focus .action-picker button[data-action="missed"] { font-size: clamp(14px,3.8vw,20px); }
+ .match-focus .assign-player .player-name { font-size: 17px; line-height: 1.1; }
+}
+@media screen and (min-width:601px) {
+ .match-focus[data-tablet-layout="true"] .action-picker button { font-size: clamp(24px,3.6vw,38px); padding: 10px; }
+ .match-focus[data-tablet-layout="true"] .action-picker button[data-action="missed"] { font-size: clamp(22px,3vw,32px); }
+ .match-focus[data-tablet-layout="true"] .assign-player .player-name { font-size: clamp(24px,3.5vw,34px); line-height: 1.1; }
+}
+@media (max-width:350px) and (min-height:501px) {
+ .match-focus .assign-player .player-name { font-size: 14px; }
+}
+@media screen and (min-width:601px) {
+ .match-focus[data-tablet-layout="true"][data-mobile-step="stats"] .statistics-zone { height: 100%; display: flex; flex-direction: column; }
+ .match-focus[data-tablet-layout="true"] .action-picker { flex: 1; grid-auto-rows: 1fr; }
+ .match-focus[data-tablet-layout="true"] .action-picker button { font-size: clamp(24px,min(4.5vw,4.5dvh),42px); }
+ .match-focus[data-tablet-layout="true"] .action-picker button[data-action="missed"] { font-size: clamp(22px,min(3.8vw,3.8dvh),36px); }
+}

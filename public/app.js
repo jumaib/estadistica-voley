@@ -39,7 +39,7 @@ let selectedAction=null;let selectedReason=null;
 function statSnapshot(){return JSON.stringify(current)}
 function quickRows(){
  const selected=actionDefs.find(d=>d[0]===selectedAction),needsReason=['se','ae'].includes(selectedAction),ready=selected&&(!needsReason||selectedReason);
- $('actionPicker').innerHTML=actionDefs.map(([k,label,style])=>'<button class="'+style+'" data-action="'+k+'" aria-pressed="'+(k===selectedAction)+'"><span class="action-type">'+(style==='positive'?'✓ Acierto':'✕ Error')+'</span><strong>'+label+'</strong>'+'</button>').join('');
+ $('actionPicker').innerHTML=actionDefs.map(([k,label,style])=>'<button class="'+style+'" data-action="'+k+'" aria-pressed="'+(k===selectedAction)+'"><strong>'+label+'</strong>'+'</button>').join('');
  $('errorPicker').innerHTML=needsReason?['Net','Out'].map(r=>'<button data-reason="'+r+'" aria-pressed="'+(r===selectedReason)+'">'+(r==='Net'?'Red':'Fuera')+(r===selectedReason?' ✓':'')+'</button>').join(''):'';
  const label=selected?selected[1]+(needsReason&&selectedReason?' · '+(selectedReason==='Net'?'Red':'Fuera'):''):'';
  $('selectionHint').textContent=!selected?'Selecciona una estadística.':needsReason&&!selectedReason?'Elige si el error ha sido Red o Fuera.':selectedAction==='missed'?'Bola fácil sin jugar. Asigna el error al equipo.':'Seleccionada: '+label+'. Pulsa un jugador para sumar +1.';
