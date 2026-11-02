@@ -1,0 +1,58 @@
+#tabletView { display: none; }
+@media screen and (min-width:601px) {
+  .match-focus #tabletView { display: inline-block; min-height: 48px; }
+  .match-panel.match-focus[data-tablet-layout="true"] { padding: 16px; overflow: hidden; }
+  .match-focus[data-tablet-layout="true"] .match-toolbar { position: static; flex-wrap: nowrap; padding: 0 0 10px; gap: 12px; }
+  .match-focus[data-tablet-layout="true"] .match-toolbar h2 { display: none; }
+  .match-focus[data-tablet-layout="true"] .match-toolbar button { min-height: 54px; font-size: 16px; }
+  .match-focus[data-tablet-layout="true"] .undo-prominent { min-width: 190px; font-size: 22px; }
+  .match-focus[data-tablet-layout="true"] #focusMatch { margin-left: auto; }
+  .match-focus[data-tablet-layout="true"] .live-score { display: grid; grid-template-columns: 110px 120px minmax(0,1fr); gap: 14px; margin: 0; padding: 8px 0; }
+  .match-focus[data-tablet-layout="true"] .live-score label { min-width: 0; font-size: 14px; }
+  .match-focus[data-tablet-layout="true"] .live-score select { width: 100%; min-height: 52px; padding: 8px; font-size: 18px; }
+  .match-focus[data-tablet-layout="true"] .live-score>strong { font-size: 40px; }
+  .match-focus[data-tablet-layout="true"] .point-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .match-focus[data-tablet-layout="true"] .point-buttons button { min-height: 48px; font-size: 14px; padding: 8px; }
+  .match-focus[data-tablet-layout="true"] .score-help,
+  .match-focus[data-tablet-layout="true"]>.button-guide { display: none; }
+  .match-focus[data-tablet-layout="true"] #actionStatus { margin: 4px 0; height: 26px; min-height: 26px; overflow: hidden; font-size: 13px; line-height: 26px; }
+  .match-focus[data-tablet-layout="true"] .mobile-match-nav { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 8px 0 12px; flex-shrink: 0; }
+  .match-focus[data-tablet-layout="true"] .mobile-match-nav button { min-height: 58px; padding: 12px; font-size: 19px; border: 2px solid #8fa6c3; }
+  .match-focus[data-tablet-layout="true"] .mobile-match-nav button[aria-pressed="true"] { background: #123c84; border-color: #123c84; color: white; }
+  .match-focus[data-tablet-layout="true"] #mobile-changes { background: #f29843; color: #3c2106; border-color: #9c4300; }
+  .match-focus[data-tablet-layout="true"] #mobile-changes[aria-pressed="true"] { background: #a64b0d; color: white; }
+  .match-focus[data-tablet-layout="true"] .match-board { display: block; min-height: 0; overflow: auto; padding: 4px; }
+  .match-focus[data-tablet-layout="true"] .step-title,
+  .match-focus[data-tablet-layout="true"] .court-heading,
+  .match-focus[data-tablet-layout="true"] .court-summary { display: none; }
+  .match-focus[data-tablet-layout="true"][data-mobile-step="stats"] .players-zone,
+  .match-focus[data-tablet-layout="true"][data-mobile-step="players"] .statistics-zone,
+  .match-focus[data-tablet-layout="true"][data-mobile-step="changes"] .statistics-zone { display: none; }
+  .match-focus[data-tablet-layout="true"] .action-picker { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; }
+  .match-focus[data-tablet-layout="true"] .action-picker button { min-height: clamp(90px,12dvh,145px); padding: 14px; font-size: 20px; gap: 8px; }
+  .match-focus[data-tablet-layout="true"] .action-type { font-size: 13px; }
+  .match-focus[data-tablet-layout="true"] .error-picker { min-height: 0; margin: 12px 0 0; gap: 12px; }
+  .match-focus[data-tablet-layout="true"] .error-picker:empty { display: none; }
+  .match-focus[data-tablet-layout="true"] .error-picker button { min-height: 60px; font-size: 22px; }
+  .match-focus[data-tablet-layout="true"] .selection-hint { min-height: 0; padding: 12px; margin: 12px 0 0; font-size: 16px; }
+  .match-focus[data-tablet-layout="true"][data-mobile-step="players"] #mobileAction { display: block; margin: 0 0 12px; padding: 14px; background: #ecdfa4; border-radius: 8px; color: #172c4b; font-size: 20px; font-weight: 700; }
+  .match-focus[data-tablet-layout="true"][data-mobile-step="players"] #courtManager,
+  .match-focus[data-tablet-layout="true"][data-mobile-step="players"] #liberoQuick { display: none; }
+  .match-focus[data-tablet-layout="true"] .quick-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
+  .match-focus[data-tablet-layout="true"] .assign-player { min-height: clamp(100px,14dvh,145px); padding: 14px; gap: 9px; }
+  .match-focus[data-tablet-layout="true"] .assign-player .player-dorsal { font-size: 40px; }
+  .match-focus[data-tablet-layout="true"] .assign-player .player-name { font-size: 21px; -webkit-line-clamp: 2; }
+  .match-focus[data-tablet-layout="true"] .assign-player .player-count { display: none; }
+  .match-focus[data-tablet-layout="true"] .libero-tag { font-size: 14px; padding: 3px 8px; }
+  .match-focus[data-tablet-layout="true"][data-mobile-step="changes"] #quickPlayers,
+  .match-focus[data-tablet-layout="true"][data-mobile-step="changes"] #mobileAction { display: none; }
+  .match-focus[data-tablet-layout="true"][data-mobile-step="changes"] #courtManager[open] { max-height: none; overflow: visible; margin: 0; padding: 18px; }
+  .match-focus[data-tablet-layout="true"] #courtManager { font-size: 17px; }
+  .match-focus[data-tablet-layout="true"] .court-choices label { min-height: 56px; font-size: 17px; }
+  .match-focus[data-tablet-layout="true"] #courtManager button,
+  .match-focus[data-tablet-layout="true"] #courtManager select { min-height: 48px; font-size: 16px; }
+}
+@media screen and (min-width:601px) and (orientation:landscape) {
+  .match-focus[data-tablet-layout="true"] .quick-grid { grid-template-columns: repeat(4,minmax(0,1fr)); }
+  .match-focus[data-tablet-layout="true"] .assign-player { min-height: clamp(110px,20dvh,165px); }
+}
