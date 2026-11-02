@@ -1,0 +1,10 @@
+import {readFileSync,writeFileSync,mkdirSync,copyFileSync} from 'node:fs';
+const paths={'/index.html':'text/html; charset=utf-8','/app.js':'application/javascript; charset=utf-8','/schema.js':'application/javascript; charset=utf-8','/live.js':'application/javascript; charset=utf-8','/sync.js':'application/javascript; charset=utf-8'};
+paths['/theme.css']='text/css; charset=utf-8';
+paths['/demo.js']='application/javascript; charset=utf-8';
+paths['/share.js']='application/javascript; charset=utf-8';
+const assets={};for(const [path,type] of Object.entries(paths))assets[path]={type,content:readFileSync('public'+path,'utf8')};
+const crest=readFileSync('public/escudo.jpg').toString('base64');assets['/index.html'].content=assets['/index.html'].content.replace('src="escudo.jpg"','src="data:image/jpeg;base64,'+crest+'"');
+const source='const ASSETS='+JSON.stringify(assets)+';\n'+readFileSync('public/schema.js','utf8')+'\n'+readFileSync('worker/api.js','utf8');
+mkdirSync('dist/server',{recursive:true});mkdirSync('dist/.openai',{recursive:true});writeFileSync('dist/server/index.js',source);copyFileSync('.openai/hosting.json','dist/.openai/hosting.json');
+const result=await import('data:text/javascript;base64,'+Buffer.from(source).toString('base64'));if(typeof result.default.fetch!=='function')throw Error('Worker no válido');console.log('Worker Cloudflare generado y validado');

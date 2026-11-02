@@ -1,0 +1,17 @@
+dist/server/
+dist/.openai/
+dist/cloudflare/
+node_modules/
+.wrangler/
+.env*
+.dev.vars*
+work/
+outputs/
+backups/
+*.sqlite
+*.sqlite-*
+*.db
+*.tar.gz
+*.zip
+migration-source.json
+cloudflare-deployment.local.json

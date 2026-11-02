@@ -1,0 +1,9 @@
+{
+  "primary_hosting": "cloudflare-direct",
+  "account_id": "YOUR_CLOUDFLARE_ACCOUNT_ID",
+  "worker_name": "voley-son-ferrer-estadisticas",
+  "database_id": "YOUR_CLOUDFLARE_DATABASE_ID",
+  "database_name": "voley-son-ferrer-estadisticas",
+  "url": "https://YOUR_WORKER.YOUR_SUBDOMAIN.workers.dev",
+  "owner_email": "tu-correo@ejemplo.com"
+}

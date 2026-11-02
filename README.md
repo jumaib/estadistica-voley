@@ -32,13 +32,16 @@ La salida para producción es `dist/cloudflare/index.js`.
 - `worker/api.js`: almacenamiento y validación de los partidos.
 - `worker/independent-auth.js`: autenticación de la instalación de Cloudflare.
 - `cloudflare-schema.sql`: estructura de la base de datos independiente.
-- `cloudflare-deployment.json`: identificadores del despliegue actual.
+- `cloudflare-deployment.json`: plantilla de configuración con valores de ejemplo.
 - `scripts/`: compilación del Worker con los recursos integrados.
 - `tests/`: pruebas del marcador, plantillas, líberos, guardado y autenticación.
 
 ## Despliegue
 
 La instalación principal utiliza directamente Cloudflare Workers y D1.
+Completa los valores de ejemplo de `cloudflare-deployment.json` con los de tu
+cuenta. La configuración real de la instalación original se conserva localmente
+en `cloudflare-deployment.local.json`, que se excluye de Git.
 Sube `dist/cloudflare/index.js` como módulo Worker, con el enlace `DB` a la base
 de datos indicada en `cloudflare-deployment.json` y la variable `OWNER_EMAIL`
 con el correo del propietario. Conserva los enlaces, datos y acceso existentes.

@@ -1,0 +1,1 @@
+document.getElementById('logout').onclick=async()=>{const response=await fetch('/auth/logout',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json','X-SonFerrer-Request':'1'}});if(response.ok)location.assign('/')};

@@ -1,0 +1,49 @@
+/* Softer screen surfaces; exported and printed reports keep a white page. */
+@media screen {
+  :root, body { background: #c7d2e0; color: #172c4b; }
+  .panel, .stat, .match-panel.match-focus { background: #dce4ee; border-color: #aebdd0; }
+  .match-toolbar { background: #dce4ee; border-bottom-color: #aebdd0; }
+  input, select, textarea { background: #e7edf4; color: #172c4b; border-color: #a6b6c9; }
+  input::placeholder, textarea::placeholder { color: #5b6c80; opacity: 1; }
+  button { background: #ccd8e7; border-color: #a2b4ca; }
+  button:hover { background: #bdcde1; }
+  .match-search, .court-choices label { background: #cdd9e7; }
+  th { background: #c5d3e3; color: #354b68; }
+  td, th { border-bottom-color: #b7c6d8; }
+  .muted, .notice, .stat span, .date-help, footer, .score-help, .court-summary, dd { color: #4b5d73; }
+  .match-panel .assign-player { background: #1451bf; border: 2px solid #082f80; color: #fff; }
+  .match-panel .assign-player:disabled { opacity: 1; }
+  .match-panel .assign-player:not(.libero-player):not(.team-error):active { background: #0b3e96; }
+  .match-panel .assign-player .player-count { color: #fff; }
+  .match-panel .action-picker button.positive, #homePoint { background: #c9e2d0; }
+  .match-panel .action-picker button.error, .error-picker button, #awayPoint, .match-panel .team-error { background: #eacccc; }
+  .selection-hint { background: #ecdfa4; }
+  .button-guide, #courtManager[open] { background: #d3deeb; border-color: #aebdd0; }
+  .libero-link, .libero-quick button { background: #f2d56a; }
+  .match-panel .assign-player.libero-player {
+    background: #ffdc27;
+    border: 3px solid #9a7610;
+    color: #463700;
+  }
+  .match-panel .assign-player.libero-player:not(:disabled):active { background: #e4bf26; }
+  .match-panel .assign-player.libero-player:disabled { opacity: 1; }
+  .match-panel .libero-player .player-count { color: #5c4800; }
+  .libero-tag { background: #785b00; color: #fff7c9; font-weight: 700; }
+  .libero-quick button, .libero-quick button.return-libero,
+  #openCourt, #makeSub {
+    background: #f29843; border: 2px solid #9c4300; color: #3c2106; font-weight: 700;
+  }
+  .libero-quick button:disabled, #makeSub:disabled { opacity: .75; }
+  .court-choices label.libero-choice { background: #ffdc27; color: #463700; border: 2px solid #9a7610; }
+  .point-buttons { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .point-buttons .subtract-point { background: #c6d2e2; color: #263f62; border: 2px solid #8fa6c3; }
+  .point-buttons .subtract-point:hover { background: #b6c7dd; }
+  #whatsapp { background: #b9dbbd; border: 2px solid #3c7750; color: #17472a; }
+  #shareDialog { width: min(620px,94vw); max-height: 90dvh; overflow: auto; border: 1px solid #8ba2be; border-radius: 14px; background: #dce4ee; color: #172c4b; padding: 20px; }
+  #shareDialog::backdrop { background: #102c4dcc; }
+  #shareDialog h2 { margin: 0; }
+  #shareText { min-height: 230px; font-size: 13px; line-height: 1.5; }
+  #openWhatsApp { display: inline-block; text-decoration: none; font-size: 13px; font-weight: 700; padding: 12px 15px; background: #266c3b; color: white; border-radius: 8px; }
+  #shareDialog .actions { margin: 12px 0; }
+}
+
