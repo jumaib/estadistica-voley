@@ -153,3 +153,9 @@ test('offline edits upload later and survive a response lost after commit',async
 });
 
 
+test('setting errors score once, undo, persist, export and migrate old records',()=>{
+ const store=new Map(),c=browserSession(store);
+ vm.runInContext(`$('add').onclick();current.players[0].name='Prueba';selectedAction='ce';recordAction(0,'ce');if(current.players[0].ce!==1||+current.sets[0][1]!==1||selectedAction!==null)throw Error('setting score');if(!report().includes('Err. colocación')||!validMatches(db))throw Error('report or validation');`,c);
+ const reload=browserSession(store);assert.equal(vm.runInContext('current.players[0].ce',reload),1);
+ vm.runInContext(`$('undo').onclick();if(current.players[0].ce!==0||+current.sets[0][1]!==0)throw Error('undo setting');delete current.players[0].ce;if(normalizeMatches([current])[0].players[0].ce!==0)throw Error('legacy default');`,c);
+});
