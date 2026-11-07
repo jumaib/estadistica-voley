@@ -1,5 +1,5 @@
 function completeReportDocument(){return {
- data:'\ufeff<html><meta charset="utf-8"><style>body{font-family:Arial}table{border-collapse:collapse}td,th{border:1px solid #bbb;padding:5px;font-size:10px}h1{color:#123c84}</style><body>'+report()+'</body></html>',
+ data:'\ufeff<html><meta charset="utf-8"><style>body{font-family:Arial}table{border-collapse:collapse;width:100%;table-layout:fixed}td,th{border:1px solid #bbb;padding:5px;font-size:10px;white-space:normal;word-wrap:break-word;vertical-align:top}th{font-weight:bold}h1{color:#123c84}</style><body>'+report()+'</body></html>',
  name:'Son-Ferrer-'+(current.date||'partido')+'.doc'
 }}
 function shareFeedback(message){$('shareMessage').textContent=message;if(!$('shareDialog').open)$('shareDialog').showModal()}

@@ -129,3 +129,9 @@
  .match-panel:not(.match-focus) .step-title, .match-panel:not(.match-focus) #actionStatus { font-size: 17px; }
 }
 #cadetCalendar[hidden], #cadetCalendar [hidden] { display: none !important; }
+@media print {
+ #report table { width: 100%; table-layout: fixed; }
+ #report th, #report td { white-space: normal; overflow-wrap: anywhere; word-break: normal; hyphens: none; vertical-align: top; }
+ #report th { text-transform: none; letter-spacing: normal; }
+ #report tr { break-inside: avoid; }
+}

@@ -31,7 +31,7 @@ test('sharing passes the full report as a file; unsupported browsers download; c
  const c=browserSession();let shared;c.File=File;c.downloads=[];c.navigator={canShare:()=>true,share:async payload=>{shared=payload}};
  vm.runInContext(readFileSync('public/share.js','utf8'),c);vm.runInContext(`current.rival='Sóller & Palma';current.date='2026-11-01';current.notes='Notas completas del partido';$('add').onclick();current.players[0].name='Ana';recordAction(0,'de');download=(...args)=>downloads.push(args);$('shareDialog').showModal=()=>{};`,c);
  await vm.runInContext('shareWordReport()',c);
- assert.equal(shared.files.length,1);assert.equal(shared.text,undefined);assert.equal(shared.files[0].name,'Son-Ferrer-2026-11-01.doc');const contents=await shared.files[0].text();for(const section of ['Ana','Err. defensa','Notas completas del partido','Pista y cambios','01/11/2026'])assert.ok(contents.includes(section));assert.equal(c.downloads.length,0);
+ assert.equal(shared.files.length,1);assert.equal(shared.text,undefined);assert.equal(shared.files[0].name,'Son-Ferrer-2026-11-01.doc');const contents=await shared.files[0].text();for(const section of ['Ana','Errores de defensa','Notas completas del partido','Pista y cambios','01/11/2026'])assert.ok(contents.includes(section));assert.equal(c.downloads.length,0);
  c.navigator={canShare:()=>false};await vm.runInContext('shareWordReport()',c);assert.equal(c.downloads.length,1);assert.ok(c.downloads[0][0].includes('Notas completas del partido'));
  c.navigator={canShare:()=>true,share:async()=>{const error=new Error();error.name='AbortError';throw error}};await vm.runInContext('shareWordReport()',c);assert.equal(c.downloads.length,1);
 });
@@ -59,7 +59,7 @@ test('defense errors score for the rival; fictional demo is valid and idempotent
  const id=current.id,n=db.length,teamCount=teams.length,points=+current.sets[0][1],receipts=current.players[2].rt;
  recordAction(2,'de');if(current.players[2].de!==2||+current.sets[0][1]!==points+1||current.players[2].rt!==receipts)throw Error('defense');
  $('undo').onclick();if(current.players[2].de!==1||+current.sets[0][1]!==points)throw Error('defense undo');
- createDemo();if(current.id!==id||db.length!==n||teams.length!==teamCount||!report().includes('Err. defensa'))throw Error('reopen demo');
+ createDemo();if(current.id!==id||db.length!==n||teams.length!==teamCount||!report().includes('Errores de defensa'))throw Error('reopen demo');
  `,c);
 });
 test('libero links persist and one-tap relays never count as normal substitutions',()=>{
@@ -155,7 +155,7 @@ test('offline edits upload later and survive a response lost after commit',async
 
 test('setting errors score once, undo, persist, export and migrate old records',()=>{
  const store=new Map(),c=browserSession(store);
- vm.runInContext(`$('add').onclick();current.players[0].name='Prueba';selectedAction='ce';recordAction(0,'ce');if(current.players[0].ce!==1||+current.sets[0][1]!==1||selectedAction!==null)throw Error('setting score');if(!report().includes('Err. colocación')||!validMatches(db))throw Error('report or validation');`,c);
+ vm.runInContext(`$('add').onclick();current.players[0].name='Prueba';selectedAction='ce';recordAction(0,'ce');if(current.players[0].ce!==1||+current.sets[0][1]!==1||selectedAction!==null)throw Error('setting score');if(!report().includes('Errores de colocación')||!validMatches(db))throw Error('report or validation');`,c);
  const reload=browserSession(store);assert.equal(vm.runInContext('current.players[0].ce',reload),1);
  vm.runInContext(`$('undo').onclick();if(current.players[0].ce!==0||+current.sets[0][1]!==0)throw Error('undo setting');delete current.players[0].ce;if(normalizeMatches([current])[0].players[0].ce!==0)throw Error('legacy default');`,c);
 });
