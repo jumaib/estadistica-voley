@@ -6,6 +6,8 @@ paths['/share.js']='application/javascript; charset=utf-8';
 paths['/mobile.js']='application/javascript; charset=utf-8';
 paths['/tablet.js']='application/javascript; charset=utf-8';
 paths['/tablet.css']='text/css; charset=utf-8';
+paths['/fixtures.js']='application/javascript; charset=utf-8';
+paths['/calendar.js']='application/javascript; charset=utf-8';
 const assets={};for(const [path,type] of Object.entries(paths))assets[path]={type,content:readFileSync('public'+path,'utf8')};
 const crest=readFileSync('public/escudo.jpg').toString('base64');assets['/index.html'].content=assets['/index.html'].content.replace('src="escudo.jpg"','src="data:image/jpeg;base64,'+crest+'"');
 const source='const ASSETS='+JSON.stringify(assets)+';\n'+readFileSync('public/schema.js','utf8')+'\n'+readFileSync('worker/api.js','utf8');
