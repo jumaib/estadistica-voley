@@ -128,3 +128,4 @@
  .match-panel:not(.match-focus) .point-buttons button, .match-panel:not(.match-focus) #openCourt { font-size: 18px; }
  .match-panel:not(.match-focus) .step-title, .match-panel:not(.match-focus) #actionStatus { font-size: 17px; }
 }
+#cadetCalendar[hidden], #cadetCalendar [hidden] { display: none !important; }
