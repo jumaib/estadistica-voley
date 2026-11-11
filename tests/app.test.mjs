@@ -29,11 +29,11 @@ test('six players plus two marked liberos can receive stats without relays and p
 });
 test('sharing passes the full report as a file; unsupported browsers download; cancellation does not',async()=>{
  const c=browserSession();let shared;c.File=File;c.downloads=[];c.navigator={canShare:()=>true,share:async payload=>{shared=payload}};
- vm.runInContext(readFileSync('public/share.js','utf8'),c);vm.runInContext(`current.rival='Sóller & Palma';current.date='2026-11-01';current.notes='Notas completas del partido';$('add').onclick();current.players[0].name='Ana';recordAction(0,'de');download=(...args)=>downloads.push(args);$('shareDialog').showModal=()=>{};`,c);
- await vm.runInContext('shareWordReport()',c);
- assert.equal(shared.files.length,1);assert.equal(shared.text,undefined);assert.equal(shared.files[0].name,'Son-Ferrer-2026-11-01.doc');const contents=await shared.files[0].text();for(const section of ['Ana','Errores de defensa','Notas completas del partido','Pista y cambios','01/11/2026'])assert.ok(contents.includes(section));assert.equal(c.downloads.length,0);
- c.navigator={canShare:()=>false};await vm.runInContext('shareWordReport()',c);assert.equal(c.downloads.length,1);assert.ok(c.downloads[0][0].includes('Notas completas del partido'));
- c.navigator={canShare:()=>true,share:async()=>{const error=new Error();error.name='AbortError';throw error}};await vm.runInContext('shareWordReport()',c);assert.equal(c.downloads.length,1);
+ vm.runInContext("function completeReportDocument(){return {data:report(),name:'Son-Ferrer-'+current.date+'.pdf',type:'application/pdf'}}",c);vm.runInContext(readFileSync('public/share.js','utf8'),c);vm.runInContext(`current.rival='Sóller & Palma';current.date='2026-11-01';current.notes='Notas completas del partido';$('add').onclick();current.players[0].name='Ana';recordAction(0,'de');download=(...args)=>downloads.push(args);$('shareDialog').showModal=()=>{};`,c);
+ await vm.runInContext('sharePDFReport()',c);
+ assert.equal(shared.files[0].type,'application/pdf');assert.equal(shared.files.length,1);assert.equal(shared.text,undefined);assert.equal(shared.files[0].name,'Son-Ferrer-2026-11-01.pdf');const contents=await shared.files[0].text();for(const section of ['Ana','Errores de defensa','Notas completas del partido','Pista y cambios','01/11/2026'])assert.ok(contents.includes(section));assert.equal(c.downloads.length,0);
+ c.navigator={canShare:()=>false};await vm.runInContext('sharePDFReport()',c);assert.equal(c.downloads.length,1);assert.ok(c.downloads[0][0].includes('Notas completas del partido'));
+ c.navigator={canShare:()=>true,share:async()=>{const error=new Error();error.name='AbortError';throw error}};await vm.runInContext('sharePDFReport()',c);assert.equal(c.downloads.length,1);
 });
 test('statistics clear selection and prevent a second assignment, including team errors',()=>{
  const c=browserSession();vm.runInContext(`
