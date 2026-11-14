@@ -4,7 +4,7 @@ function setMobileStep(step){
  const panel=$('matchPanel');panel.dataset.mobileStep=step;
  for(const name of ['stats','players','changes'])$('mobile-'+name).setAttribute('aria-pressed',String(name===step));
  const selected=actionDefs.find(d=>d[0]===selectedAction);
- $('mobileAction').textContent=selected?selected[1]+(selectedReason?' · '+(selectedReason==='Net'?'Red':'Fuera'):'')+' · Elige la jugadora':'Elige primero una estadística';
+ $('mobileAction').textContent=selected?selected[1]+(selectedReason?' · '+(selectedReason==='Net'?'Red':'Fuera'):'')+' · Elige jugadora o equipo contrario':'Elige primero una estadística';
  if(step==='changes'){$('courtManager').open=true;courtDraft=[...statsPlayerIds()];courtDraftFor=current.id;renderCourt()}
 }
 function syncMobileStep(){const needsReason=['se','ae'].includes(selectedAction);setMobileStep(selectedAction&&(!needsReason||selectedReason)?'players':'stats')}

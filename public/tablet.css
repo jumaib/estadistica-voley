@@ -135,3 +135,20 @@
  #report th { text-transform: none; letter-spacing: normal; }
  #report tr { break-inside: avoid; }
 }
+@media screen {
+ .match-panel .assign-player.opponent-player { background: #d5c5ef; color: #38235d; border: 3px solid #71529e; justify-content: center; text-align: center; }
+}
+@media screen and (max-width:600px) {
+ .match-focus .quick-grid:has(.opponent-player) { grid-template-columns: repeat(3,minmax(0,1fr)); }
+ .match-focus .quick-grid:has(.opponent-player) .player-name { font-size: 14px; }
+}
+@media screen and (min-width:601px) {
+ .match-focus[data-tablet-layout="true"] .quick-grid:has(.opponent-player) { grid-template-columns: repeat(3,minmax(0,1fr)); }
+ .match-focus[data-tablet-layout="true"] .quick-grid:has(.opponent-player) .assign-player { min-height: clamp(95px,13dvh,145px); }
+}
+@media screen and (min-width:601px) {
+ .match-focus[data-tablet-layout="true"] .quick-grid:has(.opponent-player) .assign-player { min-height: clamp(72px,12dvh,120px); padding: 8px; gap: 4px; }
+ .match-focus[data-tablet-layout="true"] .quick-grid:has(.opponent-player) .player-name { font-size: clamp(20px,2.5dvh,28px); }
+ .match-focus[data-tablet-layout="true"] .quick-grid:has(.opponent-player) .player-dorsal { font-size: 28px; }
+}
+@media screen { .match-focus[data-tablet-layout="true"] #liveScore { white-space: nowrap; font-size: 32px; } }

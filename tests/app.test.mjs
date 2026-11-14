@@ -159,3 +159,9 @@ test('setting errors score once, undo, persist, export and migrate old records',
  const reload=browserSession(store);assert.equal(vm.runInContext('current.players[0].ce',reload),1);
  vm.runInContext(`$('undo').onclick();if(current.players[0].ce!==0||+current.sets[0][1]!==0)throw Error('undo setting');delete current.players[0].ce;if(normalizeMatches([current])[0].players[0].ce!==0)throw Error('legacy default');`,c);
 });
+test('opponent statistics reverse scoring, persist, export and undo without changing own players',()=>{
+ const store=new Map(),c=browserSession(store);
+ vm.runInContext(`$('add').onclick();const own=JSON.stringify(current.players);selectedAction='ace';recordOpponentAction();recordOpponentAction();if(current.opponentStats.ace!==1||+current.sets[0][1]!==1||selectedAction!==null)throw Error('opponent ace');selectedAction='se';selectedReason='Out';recordOpponentAction();if(current.opponentStats.seOut!==1||current.opponentStats.se!==1||+current.sets[0][0]!==1)throw Error('opponent error');selectedAction='rp';recordOpponentAction();if(current.opponentStats.rp!==1||current.opponentStats.rt!==1||+current.sets[0][0]!==1||+current.sets[0][1]!==1)throw Error('opponent reception');if(JSON.stringify(current.players)!==own||!validMatches(db)||!report().includes('Estadísticas del equipo contrario'))throw Error('own stats or validation');$('undo').onclick();if(current.opponentStats.rp!==0)throw Error('undo');`,c);
+ const reload=browserSession(store);assert.equal(vm.runInContext('current.opponentStats.seOut',reload),1);
+ vm.runInContext(`selectedAction='missed';recordOpponentAction();if(current.opponentStats.missed!==1||+current.sets[0][0]!==2)throw Error('opponent team error');delete current.opponentStats;if(normalizeMatches([current])[0].opponentStats.ace!==0)throw Error('legacy');`,reload);
+});
