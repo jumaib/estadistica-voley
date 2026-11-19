@@ -11,7 +11,7 @@ function browserSession(store=new Map(),fetch=async()=>{throw Error('offline')})
 test('mobile steps follow action, error reason and assignment without changing match data on navigation',()=>{
  const c=browserSession();vm.runInContext(readFileSync('public/mobile.js','utf8'),c);vm.runInContext(`
  $('add').onclick();const before=statSnapshot();setMobileStep('players');setMobileStep('stats');if(statSnapshot()!==before)throw Error('navigation changed data');
- selectedAction='se';selectedReason=null;syncMobileStep();if($('matchPanel').dataset.mobileStep!=='stats')throw Error('reason step');
+ selectedAction='se';selectedReason=null;syncMobileStep();if($('matchPanel').dataset.mobileStep!=='players')throw Error('direct error step');
  selectedReason='Net';syncMobileStep();if($('matchPanel').dataset.mobileStep!=='players')throw Error('player step');
  recordAction(0,'seNet');syncMobileStep();if($('matchPanel').dataset.mobileStep!=='stats'||current.players[0].seNet!==1)throw Error('return to actions');
  `,c);
@@ -40,7 +40,7 @@ test('statistics clear selection and prevent a second assignment, including team
  $('add').onclick();
  const playerClick=()=> $('quickPlayers').onclick({target:{closest:s=>s==='button[data-player]'?{dataset:{player:'0'}}:null}});
  selectedAction='se';selectedReason='Net';playerClick();playerClick();
- if(current.players[0].seNet!==1||+current.sets[0][1]!==1||selectedAction!==null||selectedReason!==null)throw Error('duplicate player assignment');
+ if(current.players[0].se!==1||+current.sets[0][1]!==1||selectedAction!==null||selectedReason!==null)throw Error('duplicate player assignment');
  selectedAction='rp';playerClick();playerClick();if(current.players[0].rp!==1||selectedAction!==null)throw Error('non-scoring action');
  selectedAction='missed';const teamClick=()=> $('quickPlayers').onclick({target:{closest:s=>s==='button[data-team-error]'?{}:null}});teamClick();teamClick();if(current.easyBallErrors!==1||+current.sets[0][1]!==2||selectedAction!==null)throw Error('duplicate team assignment');
  if(!document.getElementById('quickPlayers').innerHTML.includes('disabled'))throw Error('players not disabled');
@@ -112,17 +112,17 @@ test('legacy stats survive; error reasons, team errors and undo persist',()=>{
  const c=browserSession();vm.runInContext(`
  $('add').onclick();current.players[0].name='Ana';
  const clickPlayer=()=> $('quickPlayers').onclick({target:{closest:s=>s==='button[data-player]'?{dataset:{player:'0'}}:null}});
- $('actionPicker').onclick({target:{closest:()=>({dataset:{action:'se'}})}});clickPlayer();if(current.players[0].se!==0)throw Error('reason required');
- $('errorPicker').onclick({target:{closest:()=>({dataset:{reason:'Net'}})}});clickPlayer();
+ $('actionPicker').onclick({target:{closest:()=>({dataset:{action:'se'}})}});clickPlayer();if(current.players[0].se!==1)throw Error('direct error');
+ recordAction(0,'seNet');
  recordAction(0,'seOut');recordAction(0,'aeOut');recordAction(0,'aeNet');
- if(current.players[0].se!==2||current.players[0].seNet!==1||current.players[0].seOut!==1||current.players[0].ae!==2||current.players[0].at!==2)throw Error('totals');
+ if(current.players[0].se!==3||current.players[0].seNet!==1||current.players[0].seOut!==1||current.players[0].ae!==2||current.players[0].at!==2)throw Error('totals');
  recordTeamError();if(current.easyBallErrors!==1||current.players[0].ae!==2)throw Error('collective error');
  $('undo').onclick();if(current.easyBallErrors!==0)throw Error('team undo');$('undo').onclick();if(current.players[0].aeNet!==0||current.players[0].ae!==1||current.players[0].at!==1)throw Error('subtype undo');
  if(!valid(db))throw Error('invalid new fields');
  const legacy=JSON.parse(JSON.stringify(db));delete legacy[0].easyBallErrors;for(const k of detailMetrics)delete legacy[0].players[0][k];legacy[0].players[0].se=4;
  const migrated=normalizeMatches(legacy);if(!valid(migrated)||migrated[0].players[0].se!==4||migrated[0].players[0].seNet!==0)throw Error('legacy');
  if(actionDefs.some(d=>d[0]==='at'||d[0]==='rt'))throw Error('removed actions');
- if(!report().includes('Saque red')||!report().includes('sin clasificar'))throw Error('report breakdown');
+ if(!report().includes('Errores de saque')||report().includes('Saque red'))throw Error('simple report');
  `,c);
 });
 test('team templates create independent zeroed stats with new fields',()=>{
@@ -161,7 +161,7 @@ test('setting errors score once, undo, persist, export and migrate old records',
 });
 test('opponent statistics reverse scoring, persist, export and undo without changing own players',()=>{
  const store=new Map(),c=browserSession(store);
- vm.runInContext(`$('add').onclick();const own=JSON.stringify(current.players);selectedAction='ace';recordOpponentAction();recordOpponentAction();if(current.opponentStats.ace!==1||+current.sets[0][1]!==1||selectedAction!==null)throw Error('opponent ace');selectedAction='se';selectedReason='Out';recordOpponentAction();if(current.opponentStats.seOut!==1||current.opponentStats.se!==1||+current.sets[0][0]!==1)throw Error('opponent error');selectedAction='rp';recordOpponentAction();if(current.opponentStats.rp!==1||current.opponentStats.rt!==1||+current.sets[0][0]!==1||+current.sets[0][1]!==1)throw Error('opponent reception');if(JSON.stringify(current.players)!==own||!validMatches(db)||!report().includes('Estadísticas del equipo contrario'))throw Error('own stats or validation');$('undo').onclick();if(current.opponentStats.rp!==0)throw Error('undo');`,c);
- const reload=browserSession(store);assert.equal(vm.runInContext('current.opponentStats.seOut',reload),1);
+ vm.runInContext(`$('add').onclick();const own=JSON.stringify(current.players);selectedAction='ace';recordOpponentAction();recordOpponentAction();if(current.opponentStats.ace!==1||+current.sets[0][1]!==1||selectedAction!==null)throw Error('opponent ace');selectedAction='se';selectedReason='Out';recordOpponentAction();if(current.opponentStats.seOut!==0||current.opponentStats.se!==1||+current.sets[0][0]!==1)throw Error('opponent error');selectedAction='rp';recordOpponentAction();if(current.opponentStats.rp!==1||current.opponentStats.rt!==1||+current.sets[0][0]!==1||+current.sets[0][1]!==1)throw Error('opponent reception');if(JSON.stringify(current.players)!==own||!validMatches(db)||!report().includes('Estadísticas del equipo contrario'))throw Error('own stats or validation');$('undo').onclick();if(current.opponentStats.rp!==0)throw Error('undo');`,c);
+ const reload=browserSession(store);assert.equal(vm.runInContext('current.opponentStats.se',reload),1);
  vm.runInContext(`selectedAction='missed';recordOpponentAction();if(current.opponentStats.missed!==1||+current.sets[0][0]!==2)throw Error('opponent team error');delete current.opponentStats;if(normalizeMatches([current])[0].opponentStats.ace!==0)throw Error('legacy');`,reload);
 });
