@@ -152,3 +152,8 @@
  .match-focus[data-tablet-layout="true"] .quick-grid:has(.opponent-player) .player-dorsal { font-size: 28px; }
 }
 @media screen { .match-focus[data-tablet-layout="true"] #liveScore { white-space: nowrap; font-size: 32px; } }
+@media screen {
+ .stat:has(#rec), .panel:has(> h2 > #easyErrors) { display: none; }
+ #players td:has([data-k="rp"]), #players td:has([data-k="ce"]) { display: none; }
+ .scroll:has(#players) thead th:nth-child(10), .scroll:has(#players) thead th:nth-child(13) { display: none; }
+}
