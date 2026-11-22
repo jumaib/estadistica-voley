@@ -165,3 +165,6 @@ test('opponent statistics reverse scoring, persist, export and undo without chan
  const reload=browserSession(store);assert.equal(vm.runInContext('current.opponentStats.se',reload),1);
  vm.runInContext(`selectedAction='missed';recordOpponentAction();if(current.opponentStats.missed!==1||+current.sets[0][0]!==2)throw Error('opponent team error');delete current.opponentStats;if(normalizeMatches([current])[0].opponentStats.ace!==0)throw Error('legacy');`,reload);
 });
+test('reports show reception errors without misleading reception totals or percentages',()=>{
+ const c=browserSession();vm.runInContext(`$('add').onclick();current.players[0].rt=8;current.players[0].rp=5;current.players[0].re=3;current.opponentStats.rt=4;current.opponentStats.re=4;const html=report();if(html.includes('Recepciones totales')||html.includes('Recepciones positivas')||html.includes('Recepción positiva'))throw Error('misleading reception');if(!html.includes('Errores de recepción')||!html.includes('<td>3</td>'))throw Error('missing errors');if(current.players[0].rt!==8||current.players[0].rp!==5)throw Error('history changed');`,c);
+});
